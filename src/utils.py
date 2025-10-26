@@ -80,13 +80,6 @@ def get_mem0_client():
         if embedding_base_url:
             config["embedder"]["config"]["ollama_base_url"] = embedding_base_url
     
-    # Configure LanceDB vector store
-    config["vector_store"] = {
-        "provider": "lancedb",
-        "config": {
-            "uri": "/tmp/lancedb",
-        }
-    }
 
     # config["custom_fact_extraction_prompt"] = CUSTOM_INSTRUCTIONS
     

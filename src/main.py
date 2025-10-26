@@ -45,8 +45,6 @@ async def mem0_lifespan(server: FastMCP) -> AsyncIterator[Mem0Context]:
 mcp = FastMCP(
     "mcp-mem0",
     lifespan=mem0_lifespan,
-    host=os.getenv("HOST", "0.0.0.0"),
-    port=os.getenv("PORT", "8050")
 )        
 
 @mcp.tool()
@@ -116,9 +114,11 @@ async def search_memories(ctx: Context, query: str, limit: int = 3) -> str:
 
 async def main():
     transport = os.getenv("TRANSPORT", "sse")
+    host = os.getenv("HOST", "0.0.0.0")
+    port = int(os.getenv("PORT", "8050"))
     if transport == 'sse':
         # Run the MCP server with sse transport
-        await mcp.run_sse_async()
+        await mcp.run_sse_async(host=host, port=port)
     else:
         # Run the MCP server with stdio transport
         await mcp.run_stdio_async()
