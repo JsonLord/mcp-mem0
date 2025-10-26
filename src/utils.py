@@ -80,12 +80,11 @@ def get_mem0_client():
         if embedding_base_url:
             config["embedder"]["config"]["ollama_base_url"] = embedding_base_url
     
-    # Configure Qdrant vector store
+    # Configure LanceDB vector store
     config["vector_store"] = {
-        "provider": "qdrant",
+        "provider": "lancedb",
         "config": {
-            "host": "localhost",
-            "port": 6333,
+            "uri": "/tmp/lancedb",
         }
     }
 
