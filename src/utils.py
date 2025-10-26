@@ -32,12 +32,9 @@ def get_mem0_client():
                 "model": llm_model,
                 "temperature": 0.2,
                 "max_tokens": 2000,
+                "api_key": llm_api_key,
             }
         }
-        
-        # Set API key in environment if not already set
-        if llm_api_key and not os.environ.get("OPENAI_API_KEY"):
-            os.environ["OPENAI_API_KEY"] = llm_api_key
             
         # For OpenRouter, set the specific API key
         if llm_provider == 'openrouter' and llm_api_key:
@@ -64,13 +61,10 @@ def get_mem0_client():
             "provider": "openai",
             "config": {
                 "model": embedding_model or "text-embedding-3-small",
-                "embedding_dims": 1536  # Default for text-embedding-3-small
+                "embedding_dims": 1536,  # Default for text-embedding-3-small
+                "api_key": llm_api_key,
             }
         }
-        
-        # Set API key in environment if not already set
-        if llm_api_key and not os.environ.get("OPENAI_API_KEY"):
-            os.environ["OPENAI_API_KEY"] = llm_api_key
     
     elif llm_provider == 'ollama':
         config["embedder"] = {
@@ -86,13 +80,12 @@ def get_mem0_client():
         if embedding_base_url:
             config["embedder"]["config"]["ollama_base_url"] = embedding_base_url
     
-    # Configure Supabase vector store
+    # Configure Qdrant vector store
     config["vector_store"] = {
-        "provider": "supabase",
+        "provider": "qdrant",
         "config": {
-            "connection_string": os.environ.get('DATABASE_URL', ''),
-            "collection_name": "mem0_memories",
-            "embedding_model_dims": 1536 if llm_provider == "openai" else 768
+            "host": "localhost",
+            "port": 6333,
         }
     }
 
