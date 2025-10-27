@@ -115,14 +115,9 @@ async def search_memories(ctx: Context, query: str, limit: int = 3) -> str:
     except Exception as e:
         return f"Error searching memories: {str(e)}"
 
-async def main():
-    transport = os.getenv("TRANSPORT", "sse")
-    if transport == 'sse':
-        # Run the MCP server with sse transport
-        await mcp.run_sse_async()
-    else:
-        # Run the MCP server with stdio transport
-        await mcp.run_stdio_async()
+def main():
+    # Run the MCP server
+    mcp.run()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    main()
