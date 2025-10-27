@@ -118,7 +118,7 @@ async def main():
     port = int(os.getenv("PORT", "8050"))
     if transport == 'sse':
         # Run the MCP server with sse transport
-        await mcp.run_async(transport=transport, host=host, port=port)
+        await mcp.run_sse_async()
     else:
         # Run the MCP server with stdio transport
         await mcp.run_stdio_async()
