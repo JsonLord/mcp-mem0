@@ -115,9 +115,9 @@ async def search_memories(ctx: Context, query: str, limit: int = 3) -> str:
     except Exception as e:
         return f"Error searching memories: {str(e)}"
 
-def main():
+async def main():
     # Run the MCP server
-    mcp.run()
+    await mcp.run_streamable_http_async()
 
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
